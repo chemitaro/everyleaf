@@ -4,13 +4,13 @@ Task
   id
   task_name :string
   content :text
-  priority :string
-  status :string
-  deadline :date
-  user_id :reference
+  priority :string #後で
+  status :string #後で
+  deadline :date #後で
+  user_id :reference #後で
   timestamp
 
-User
+User #後で
   id
   name :string
   email :string
@@ -18,13 +18,13 @@ User
   admin :boolean
   timestamp
 
-IntermediaryTaskLabel
+IntermediaryTaskLabel #後で
   id
   task_id :reference
   label_id :reference
   timestamp
 
-Label
+Label #後で
   id
   label
   timestamp
