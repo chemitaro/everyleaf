@@ -1,24 +1,30 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Task
+  id
+  task_name :string
+  content :text
+  priority :string
+  status :string
+  deadline :date
+  user_id :reference
+  timestamp
 
-Things you may want to cover:
+User
+  id
+  name :string
+  email :string
+  password_digest :string
+  admin :boolean
+  timestamp
 
-* Ruby version
+IntermediaryTaskLabel
+  id
+  task_id :reference
+  label_id :reference
+  timestamp
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Label
+  id
+  label
+  timestamp
