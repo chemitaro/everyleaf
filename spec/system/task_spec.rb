@@ -40,12 +40,20 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'error'
       end
     end 
+    context '内容が空欄の場合' do
+      it 'エラーメッセージが表示される'do
+        visit new_task_path
+        fill_in "タスク名", with: 'test_task'
+        click_on "登録する"
+        expect(page).to have_content 'error'
+      end
+    end 
   end
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         # テストで使用するためのタスクを作成
-        task = FactoryBot.create(:task, task_name: 'task')
+        task = FactoryBot.create(:task, task_name: 'task', content: 'content')
         # タスク一覧ページに遷移
         visit tasks_path
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
