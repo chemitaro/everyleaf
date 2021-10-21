@@ -20,13 +20,17 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
   def update
-    @task = Task.find(params[:id])
-    if @task.update(tasks_params)
+    task = Task.find(params[:id])
+    if task.update(tasks_params)
       redirect_to tasks_path, notice: 'タスクを編集しました'
     else
       render :edit
     end
-    
+  end
+  def destroy
+    task = Task.find(params[:id])
+    task.destroy
+    redirect_to tasks_path, notice: 'タスクを削除しました'
   end
   private
   def tasks_params
