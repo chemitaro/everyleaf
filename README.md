@@ -1,5 +1,6 @@
 # README
 
+## DB
 **Task**
 >id
 >task_name :string
@@ -28,3 +29,11 @@
 >id
 >label
 >timestamp
+
+
+## Heroku デプロイ手順
+- heroku login
+- heroku create
+  Creating app... done, ⬢ guarded-river-76835
+  https://guarded-river-76835.herokuapp.com/ |https://git.heroku.com/guarded-river-76835.git
+- git push heroku step2:master
