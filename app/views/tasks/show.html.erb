@@ -1,11 +1,19 @@
 <h1>タスク詳細</h1>
 <table>
   <tr>
-    <th>タスク：</th>
+    <th>タスク</th>
     <td> <%= @task.task_name %> </td>
   </tr>
   <tr>
-    <th>内容：</th>
+    <th>内容</th>
     <td> <%= @task.content %> </td>
+  </tr>
+  <tr>
+    <th>期限</th>
+    <td> <%= format("%04d年%02d月%02d日 %02d:%02d", @task.deadline.year, @task.deadline.month, @task.deadline.day, @task.deadline.hour, @task.deadline.min) %> </td>
+  </tr>
+  <tr>
+    <th>投稿日時</th>
+    <td> <%= format("%04d年%02d月%02d日 %02d:%02d", @task.created_at.year, @task.created_at.month, @task.created_at.day, @task.created_at.hour, @task.created_at.min) %> </td>
   </tr>
 </table>
