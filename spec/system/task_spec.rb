@@ -62,6 +62,23 @@ RSpec.describe 'タスク管理機能', type: :system do
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
+    context '複数のタスクを作成した場合' do
+      it 'タスクが作成日時の降順に並んでいる' do
+        visit new_task_path
+        fill_in "タスク名", with: 'first'
+        fill_in "内容", with: 'first_content'
+        click_on "登録する"
+        visit new_task_path
+        fill_in "タスク名", with: 'second'
+        fill_in "内容", with: 'second_content'
+        click_on "登録する"
+        visit tasks_path
+        task_list_1 = all('tbody tr')[1]
+        task_list_2 = all('tbody tr')[2]
+        expect(task_list_1).to have_content 'second'
+        expect(task_list_2).to have_content 'first'
+      end
+    end
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
