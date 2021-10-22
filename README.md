@@ -37,3 +37,4 @@
   Creating app... done, ⬢ guarded-river-76835
   https://guarded-river-76835.herokuapp.com/ |https://git.heroku.com/guarded-river-76835.git
 - git push heroku step2:master
+- heroku run rails db:migrate
