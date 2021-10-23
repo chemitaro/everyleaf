@@ -1,6 +1,15 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.all
+    if params[:select].present?
+      @select = params[:select] 
+    else
+      @select = {}
+      @select[:sort] = "created_at"
+      @select[:direction] = "asc"
+    end
+    binding.irb
+    @tasks = @tasks.order(@select[:sort] => @select[:direction].to_sym) 
   end
   def new
     @task = Task.new

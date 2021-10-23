@@ -1,5 +1,10 @@
 <h1>タスク一覧</h1>
-
+<%= form_with(scope: :select, url: tasks_path, local: true, method: :get) do |d| %>
+  <%= d.label :sort, "表示順：" %>
+  <%= d.select :sort,[["タスク名", :task_name],["内容", :content],["期限", :deadline],["投稿日", :created_at]], include_blank: "選択してください" %>
+  <%= d.select :direction,[["昇順", :asc],["降順", :desc]] %>
+  <%= d.submit "表示する" %>
+<% end %>
 <table>
   <tr>
     <th>タスク名</th>
