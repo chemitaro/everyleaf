@@ -2,14 +2,14 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all
     if params[:select].present?
-      @select = params[:select] 
-    else
-      @select = {}
-      @select[:sort] = "created_at"
-      @select[:direction] = "asc"
+      if params[:select][:search].present?
+        @tasks = @tasks.where('task_name like ?', "%#{params[:select][:search]}%")
+      end
+      if params[:select][:sort].present?
+        @tasks = @tasks.order(params[:select][:sort] => params[:select][:direction].to_sym) 
+      end
     end
-    binding.irb
-    @tasks = @tasks.order(@select[:sort] => @select[:direction].to_sym) 
+    
   end
   def new
     @task = Task.new
