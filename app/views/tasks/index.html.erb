@@ -1,16 +1,24 @@
 <h1>タスク一覧</h1>
 <%= form_with(scope: :select, url: tasks_path, local: true, method: :get) do |d| %>
   <%= d.label :search, "タスク名 検索：" %>
-  <%= d.text_field :search %>
+  <%= d.text_field :search %> <br>
+  <%= d.label :status, "ステータス絞り込み:   " %>
+  <%= d.check_box :status_not, {checked: true} %>
+  <%= d.label :status_not, "：未着手" %>
+  <%= d.check_box :status_working, {checked: true} %>
+  <%= d.label :status_working, "：着手中" %>
+  <%= d.check_box :status_fin, {checked: true} %>
+  <%= d.label :status_fin, "：完了" %> <br>
   <%= d.label :sort, "表示順：" %>
-  <%= d.select :sort,[["タスク名", :task_name],["内容", :content],["期限", :deadline],["投稿日", :created_at]], include_blank: "選択してください" %>
-  <%= d.select :direction,[["昇順", :asc],["降順", :desc]] %>
-  <%= d.submit "表示する" %>
+  <%= d.select :sort,[["タスク名", :task_name],["内容", :content],["ステータス", :status],["期限", :deadline],["投稿日", :created_at]], include_blank: "選択してください" %>
+  <%= d.select :direction,[["昇順", :asc],["降順", :desc]] %> <br>
+  <%= d.submit "表示する" %> <br>
 <% end %>
 <table>
   <tr>
     <th>タスク名</th>
     <th>内容</th>
+    <th>ステータス</th>
     <th>期限</th>
     <th>投稿日時</th>
   </tr>
@@ -18,6 +26,7 @@
   <tr>
     <td> <%= task.task_name %> </td>
     <td> <%= task.content %> </td>
+    <td> <%= task.status %> </td>
     <td> <%= format("%04d年%02d月%02d日 %02d:%02d", task.deadline.year, task.deadline.month, task.deadline.day, task.deadline.hour, task.deadline.min) %> </td>
     <td> <%= format("%04d年%02d月%02d日 %02d:%02d", task.created_at.year, task.created_at.month, task.created_at.day, task.created_at.hour, task.created_at.min) %> </td>
     <td> <%= link_to "詳細", task_path(task.id) %> </td>
