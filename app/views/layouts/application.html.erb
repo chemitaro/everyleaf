@@ -4,24 +4,28 @@
     <title>Everyleaf</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <meta name="viewport" content="width=device-width">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
   </head>
 
   <body>
   <header>
     <h1>Everyleaf</h1>
   </header>
-  <nav>
+  <div id="navbar" >
     <%= link_to 'タスク一覧', tasks_path %>
     <%= link_to 'タスク新規登録', new_task_path %>
-  </nav>
+  </div>
   <% if flash %>
     <% flash.each do |key, value| %>
       <%= content_tag(:p, value, class: key) %>
     <% end %>
   <% end %>
+  <div id="content_wrapper">
     <%= yield %>
+  </div>
+
   </body>
 </html>
