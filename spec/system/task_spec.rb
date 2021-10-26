@@ -111,9 +111,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
       it 'ステータスで検索できる' do
         visit tasks_path
-        check '未着手'
-        uncheck '着手中'
-        uncheck '完了'
+        select '未着手', from:'select_status'
         click_on "表示する"
         expect(page).to have_content "task1"
         expect(page).to_not have_content "task2"
@@ -122,10 +120,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it 'タイトルとステータスの両方で検索できる' do
         visit tasks_path
         fill_in "タスク名 検索：", with: "task1"
-        click_on "表示する"
-        check '未着手'
-        uncheck '着手中'
-        uncheck '完了'
+        select '未着手', from:'select_status'
         click_on "表示する"
         expect(page).to have_content "task1"
         expect(page).to_not have_content "task2"

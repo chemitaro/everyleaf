@@ -1,11 +1,15 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
-    if params[:select].present?
-      @tasks = @tasks.search(params[:select]) if params[:select][:search].present?
-      @tasks = @tasks.status(params[:select])
-      @tasks = @tasks.sort_index(params[:select]) if params[:select][:sort_index].present?
-    end
+    # if params[:select].present?
+    #   @tasks = @tasks.search(params[:select]) if params[:select][:search].present?
+    #   @tasks = @tasks.status(params[:select])
+    #   # @tasks = @tasks.sort_index(params[:select]) if params[:select][:sort_index].present?
+    # end
+    # @tasks = @tasks.search(params[:select]) if params[:select].presence?
+    @tasks = @tasks.search(params[:select]) if params[:select].present?
+    @tasks = @tasks.order(deadline: :desc) if params[:sort_expired]
+    @tasks = @tasks.order(priority: :desc) if params[:sort_priority]
     @tasks = @tasks.page(params[:page]).per(5)
   end
   def new
@@ -44,7 +48,7 @@ class TasksController < ApplicationController
   def params_select
     params[:select]
   end
-  
+
   private
   def tasks_params
     params.require(:task).permit(:task_name, :content, :status, :priority, :deadline,)
