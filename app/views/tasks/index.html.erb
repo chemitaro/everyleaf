@@ -4,11 +4,11 @@
   <%= d.text_field :search %> <br>
   <%= d.label :status, "ステータス絞り込み:   " %>
   <%= d.check_box :status_not, {checked: true} %>
-  <%= d.label :status_not, "：未着手" %>
+  <%= d.label :status_not, "未着手" %>
   <%= d.check_box :status_working, {checked: true} %>
-  <%= d.label :status_working, "：着手中" %>
+  <%= d.label :status_working, "着手中" %>
   <%= d.check_box :status_fin, {checked: true} %>
-  <%= d.label :status_fin, "：完了" %> <br>
+  <%= d.label :status_fin, "完了" %> <br>
   <%= d.label :sort_index, "表示順：" %>
   <%= d.select :sort_index,[["タスク名", :task_name],["内容", :content],["ステータス", :status],["期限", :deadline],["投稿日", :created_at]], include_blank: "選択してください" %>
   <%= d.select :direction,[["昇順", :asc],["降順", :desc]] %> <br>
