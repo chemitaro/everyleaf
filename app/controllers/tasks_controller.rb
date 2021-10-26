@@ -1,12 +1,12 @@
 class TasksController < ApplicationController
   def index
-    binding.irb
     @tasks = Task.all
     if params[:select].present?
       @tasks = @tasks.search(params[:select]) if params[:select][:search].present?
       @tasks = @tasks.status(params[:select])
       @tasks = @tasks.sort_index(params[:select]) if params[:select][:sort_index].present?
     end
+    @tasks = @tasks.page(params[:page]).per(5)
   end
   def new
     @task = Task.new
