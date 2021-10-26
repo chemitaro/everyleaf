@@ -9,8 +9,8 @@
   <%= d.label :status_working, "：着手中" %>
   <%= d.check_box :status_fin, {checked: true} %>
   <%= d.label :status_fin, "：完了" %> <br>
-  <%= d.label :sort, "表示順：" %>
-  <%= d.select :sort,[["タスク名", :task_name],["内容", :content],["ステータス", :status],["期限", :deadline],["投稿日", :created_at]], include_blank: "選択してください" %>
+  <%= d.label :sort_index, "表示順：" %>
+  <%= d.select :sort_index,[["タスク名", :task_name],["内容", :content],["ステータス", :status],["期限", :deadline],["投稿日", :created_at]], include_blank: "選択してください" %>
   <%= d.select :direction,[["昇順", :asc],["降順", :desc]] %> <br>
   <%= d.submit "表示する" %> <br>
 <% end %>
