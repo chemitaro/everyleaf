@@ -3,16 +3,25 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
-        # 1. new_task_pathに遷移する（新規作成ページに遷移する）
         visit new_task_path
-        # 2. 新規登録内容を入力する
         fill_in "タスク名", with: 'test_task'
         fill_in "内容", with: 'test_content'
-        # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
+        #終了期限の登録を追記
+        select '2021', from:'task_deadline_1i'
+        select '10月', from:'task_deadline_2i'
+        select '26', from:'task_deadline_3i'
+        select '17', from:'task_deadline_4i'
+        select '15', from:'task_deadline_5i'
+        #ステータスの登録を追記
+        select '未着手', from:'task_status'
         click_on "登録する"
-        # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
         expect(page).to have_content 'test_task'
         expect(page).to have_content 'test_content'
+        #終了期限の確認
+        expect(page).to have_content '2021年10月26日 17:15'
+        #ステータスの確認
+        expect(page).to have_content '未着手'
+
       end
     end
     context 'タスク名の文字数オーバーの場合' do
@@ -62,23 +71,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
-    context '複数のタスクを作成した場合' do
-      it 'タスクが作成日時の降順に並んでいる' do
-        visit new_task_path
-        fill_in "タスク名", with: 'first'
-        fill_in "内容", with: 'first_content'
-        click_on "登録する"
-        visit new_task_path
-        fill_in "タスク名", with: 'second'
-        fill_in "内容", with: 'second_content'
-        click_on "登録する"
-        visit tasks_path
-        task_list_1 = all('tbody tr')[1]
-        task_list_2 = all('tbody tr')[2]
-        expect(task_list_1).to have_content 'second'
-        expect(task_list_2).to have_content 'first'
-      end
-    end
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
@@ -88,6 +80,58 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content Task.last.task_name
         expect(page).to have_content Task.last.content
       end
+    end
+  end
+  describe '検索機能' do
+    context '検索した場合' do
+      before do
+        visit new_task_path
+        fill_in "タスク名",	with: "task1"
+        fill_in "内容",	with: "content"
+        select '未着手', from:'task_status'
+        click_on "登録する"
+        visit new_task_path
+        fill_in "タスク名",	with: "task2"
+        fill_in "内容",	with: "content"
+        select '着手中', from:'task_status'
+        click_on "登録する"
+        visit new_task_path
+        fill_in "タスク名",	with: "task3"
+        fill_in "内容",	with: "content"
+        select '完了', from:'task_status'
+        click_on "登録する"
+      end
+      it 'タイトルで検索できる' do
+        visit tasks_path
+        fill_in "タスク名 検索：", with: "task1"
+        click_on "表示する"
+        expect(page).to have_content "task1"
+        expect(page).to_not have_content "task2"
+        expect(page).to_not have_content "task3"
+      end
+      it 'ステータスで検索できる' do
+        visit tasks_path
+        check '未着手'
+        uncheck '着手中'
+        uncheck '完了'
+        click_on "表示する"
+        expect(page).to have_content "task1"
+        expect(page).to_not have_content "task2"
+        expect(page).to_not have_content "task3"
+      end
+      it 'タイトルとステータスの両方で検索できる' do
+        visit tasks_path
+        fill_in "タスク名 検索：", with: "task1"
+        click_on "表示する"
+        check '未着手'
+        uncheck '着手中'
+        uncheck '完了'
+        click_on "表示する"
+        expect(page).to have_content "task1"
+        expect(page).to_not have_content "task2"
+        expect(page).to_not have_content "task3"
+      end
+
     end
   end
 end
