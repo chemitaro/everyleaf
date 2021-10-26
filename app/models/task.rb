@@ -3,6 +3,9 @@ class Task < ApplicationRecord
   validates :content, presence: true, length: { maximum: 225 }
   validates :deadline, presence: true
   validates :status, presence: true
+  validates :priority, presence: true
+
+  enum priority: ["低", "中", "高"]
   
   scope :search, ->(params_select) {where('task_name like ?', "%#{params_select[:search]}%")}
   scope :status, ->(params_select) do
