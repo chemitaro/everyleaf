@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   def index
+    binding.irb
     @tasks = Task.all
     if params[:select].present?
       @tasks = @tasks.search(params[:select]) if params[:select][:search].present?
