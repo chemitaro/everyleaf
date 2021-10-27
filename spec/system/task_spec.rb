@@ -71,6 +71,18 @@ RSpec.describe 'タスク管理機能', type: :system do
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
+    context '終了期限でソートするというリンクを押すと' do
+      it '作成したタスクが表示される' do
+        FactoryBot.create(:task, task_name: 'task1', content: 'content', deadline: '2021-10-27 04:05:00')
+        FactoryBot.create(:task, task_name: 'task2', content: 'content', deadline: '2021-10-28 04:05:00')
+        visit tasks_path
+        click_on '終了期限でソートする'
+        first_table = all('tbody tr')[1]
+        second_table = all('tbody tr')[2]
+        expect(first_table).to have_content '2021年10月28日'
+        expect(first_table).to have_content '2021年10月27日'
+      end
+    end
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do

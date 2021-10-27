@@ -7,7 +7,15 @@ class TasksController < ApplicationController
     #   # @tasks = @tasks.sort_index(params[:select]) if params[:select][:sort_index].present?
     # end
     # @tasks = @tasks.search(params[:select]) if params[:select].presence?
-    @tasks = @tasks.search(params[:select]) if params[:select].present?
+
+    # @tasks = @tasks.search(params[:select]) if params[:select].present?
+
+    if params[:select].present?
+      @tasks = @tasks.search_status(params[:select][:search], params[:select][:status]) if params[:select][:search].present? && params[:select][:status].present?
+      @tasks = @tasks.search(params[:select][:search]) if params[:select][:search].present?
+      @tasks = @tasks.status(params[:select][:status]) if params[:select][:status].present?
+    end
+
     @tasks = @tasks.order(deadline: :desc) if params[:sort_expired]
     @tasks = @tasks.order(priority: :desc) if params[:sort_priority]
     @tasks = @tasks.page(params[:page]).per(5)
