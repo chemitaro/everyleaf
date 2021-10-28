@@ -21,8 +21,14 @@ header h1{
   height: 28px;
   background-color: darkgrey;
 }
-#navbar a{
+#nav_task{
+  float: left;
+}
+#nav_user{
   float: right;
+}
+
+#navbar a{
   padding-right: 15px;
 }
 
