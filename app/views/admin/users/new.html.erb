@@ -1,0 +1,38 @@
+<h1>管理者メニュー ユーザーの作成</h1>
+<% if @user.errors.any? %>
+  <div>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= "#{msg}" %></li>
+      <% end %>
+    </ul>
+  </div>
+  
+<% end %>
+
+
+<%= form_with(model: @user, local: true, url: admin_users_path) do |f| %>
+  <table>
+    <tr>
+    <th><%= f.label :name, "ユーザー名" %></th>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :email, "メールアドレス" %></th>
+    <td><%= f.email_field :email %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :password, "パスワード" %></th>
+    <td><%= f.password_field :password %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :password_comfirm, "パスワード（確認）" %></th>
+    <td><%= f.password_field :password_confirmation %></td>
+  </tr>
+  <tr>
+    <th>管理者</th>
+  </tr>
+  </table>
+  <%= f.submit "登録する" %>
+
+<% end %>

@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validates :status, presence: true
   validates :priority, presence: true
+  validates :user_id, presence: true
 
   enum priority: ["低", "中", "高"]
   

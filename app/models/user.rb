@@ -7,5 +7,4 @@ class User < ApplicationRecord
                     uniqueness: true
   has_secure_password
   validates :password, length: {minimum: 6, maximum: 25}
-  validates :user_id, presence: true
 end
