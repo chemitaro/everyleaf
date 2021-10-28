@@ -25,7 +25,10 @@ class TasksController < ApplicationController
   end
   def create
     @task = Task.new(tasks_params)
+    binding.irb
+    @task.user_id = current_user.id
     if @task.save
+      binding.irb
       flash[:notice] = 'タスクを登録しました'
       redirect_to task_path(@task.id)
     else

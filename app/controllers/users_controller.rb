@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_action :before_login, only: [:new, :create]
+
   def new
     @user = User.new
   end
