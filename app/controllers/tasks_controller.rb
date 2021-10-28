@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     # if params[:select].present?
     #   @tasks = @tasks.search(params[:select]) if params[:select][:search].present?
     #   @tasks = @tasks.status(params[:select])
@@ -25,10 +25,8 @@ class TasksController < ApplicationController
   end
   def create
     @task = Task.new(tasks_params)
-    binding.irb
     @task.user_id = current_user.id
     if @task.save
-      binding.irb
       flash[:notice] = 'タスクを登録しました'
       redirect_to task_path(@task.id)
     else
