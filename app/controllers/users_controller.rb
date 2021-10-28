@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     if @user.save
       flash[:notice] = '新規ユーザーを登録しました'
     else
-      flash.now[:notice] = '正しい情報を入力してください'
+      flash.now[:danger] = '正しい情報を入力してください'
       render :new
     end
   end
