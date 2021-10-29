@@ -1,16 +1,14 @@
 class Admin::UsersController < ApplicationController
   def index
     @users = User.all
+    @task_count = Task.group(:user_id).count
   end
   def new
     @user = User.new
   end
   def create
-    binding.irb
     @user = User.new(admin_user_params)
-    binding.irb
     if @user.save
-      binding.irb
       flash[:notice] = '新しいユーザーを作成しました'
       redirect_to(admin_user_path(@user.id))
     else
@@ -36,11 +34,8 @@ class Admin::UsersController < ApplicationController
   end
   def destroy
     @user = User.find(params[:id])
-    binding.irb
-    @user.tasks.delete_all if @user.tasks.present?
-    binding.irb
+    Task.where(user_id: @user.id).delete_all if @user.tasks.present?
     @user.destroy
-    binding.irb
     flash[:notice] = "ユーザーを削除しました"
     redirect_to(admin_users_path)
   end

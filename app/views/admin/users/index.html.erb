@@ -1,4 +1,4 @@
-<h1>管理者メニュー ユーザー一覧</h1>
+<h1>【管理者メニュー】 ユーザー一覧</h1>
 
 <table>
   <tr>
@@ -8,10 +8,10 @@
 <% @users.each do |u| %>
   <tr>
     <td><%= u.name %></td>
-    <td><%= u.tasks.count %></td>
+    <td><%= @task_count[u.id] %></td>
     <td><%= link_to("詳細", admin_user_path(u.id)) %></td>
     <td><%= link_to("編集", edit_admin_user_path(u.id)) %></td>
-    <td><%= link_to("削除", admin_user_path(u.id), method: :delete) %></td>
+    <td><%= link_to("削除", admin_user_path(u.id), method: :delete, data: {confirm: "削除しますか？"}) %> </td>
   </tr>
 <% end %>
 </table>
