@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-  skip_before_action :before_login, only: [:new, :create]
+  skip_before_action :access_block_before_login, only: [:new, :create]
+  before_action :access_block_after_login, only: [:new, :create]
 
   def new
   end

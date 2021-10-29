@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  skip_before_action :before_login, only: [:new, :create]
+  skip_before_action :access_block_before_login, only: [:new, :create]
+  before_action :access_block_after_login, only: [:new, :create]
+  before_action :access_block_another_user, only: [:show]
 
   def new
     @user = User.new
@@ -16,7 +18,6 @@ class UsersController < ApplicationController
     end
   end
   def show
-    access_block_user
     @user = User.find(params[:id])
   end
   private

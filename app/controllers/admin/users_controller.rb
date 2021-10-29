@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :access_block_admin
+  before_action :access_block_non_admin
   def index
     @users = User.all
     @task_count = Task.group(:user_id).count
