@@ -16,8 +16,8 @@ class UsersController < ApplicationController
     end
   end
   def show
+    access_block_user
     @user = User.find(params[:id])
-
   end
   private
   def user_params

@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :admin_only
+  before_action :access_block_admin
   def index
     @users = User.all
     @task_count = Task.group(:user_id).count
@@ -44,15 +44,4 @@ class Admin::UsersController < ApplicationController
   def admin_user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
   end
-  def admin_only
-    unless current_user_admin?
-      flash[:danger] = '不正なアクセスです'
-      redirect_to(tasks_path) 
-    end
-  end
-  
-  
-  
-  
-  
 end
