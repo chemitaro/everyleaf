@@ -3,6 +3,7 @@ class Admin::UsersController < ApplicationController
   def index
     @users = User.all
     @task_count = Task.group(:user_id).count
+    @current_user = current_user
   end
   def new
     @user = User.new
@@ -35,7 +36,6 @@ class Admin::UsersController < ApplicationController
   end
   def destroy
     @user = User.find(params[:id])
-    binding.irb
     if @user.destroy
       flash[:notice] = "ユーザーを削除しました"
       redirect_to(admin_users_path)
