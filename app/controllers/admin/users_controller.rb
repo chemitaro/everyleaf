@@ -35,10 +35,15 @@ class Admin::UsersController < ApplicationController
   end
   def destroy
     @user = User.find(params[:id])
-    Task.where(user_id: @user.id).delete_all if @user.tasks.present?
-    @user.destroy
-    flash[:notice] = "ユーザーを削除しました"
-    redirect_to(admin_users_path)
+    binding.irb
+    if @user.destroy
+      flash[:notice] = "ユーザーを削除しました"
+      redirect_to(admin_users_path)
+    else
+      flash[:danger] = "ユーザーを削除できませんでした"
+      redirect_to(admin_users_path)
+    end
+    
   end
   private
   def admin_user_params
