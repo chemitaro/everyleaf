@@ -1,5 +1,12 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  before do
+    FactoryBot.create(:user,id: 1, name: 'user', email: 'user@email.com', password: 'password', admin: false)
+    visit new_session_path
+    fill_in "メールアドレス",	with: 'user@email.com'
+    fill_in "パスワード", with: 'password'
+    click_button "ログイン"
+  end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
@@ -21,7 +28,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content '2021年10月26日 17:15'
         #ステータスの確認
         expect(page).to have_content '未着手'
-
       end
     end
     context 'タスク名の文字数オーバーの場合' do
@@ -59,28 +65,30 @@ RSpec.describe 'タスク管理機能', type: :system do
     end 
   end
   describe '一覧表示機能' do
+    before do
+      FactoryBot.create(:task, task_name: 'task1', content: 'content', status:'未着手', priority: '低', deadline: '2021-10-27 04:05:00',user_id: 1)
+      FactoryBot.create(:task, task_name: 'task2', content: 'content', status:'着手中', priority: '中', deadline: '2021-10-28 04:05:00',user_id: 1)
+      FactoryBot.create(:task, task_name: 'task3', content: 'content', status:'完了', priority: '高', deadline: '2021-10-29 04:05:00',user_id: 1)
+
+    end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        # テストで使用するためのタスクを作成
-        task = FactoryBot.create(:task, task_name: 'task', content: 'content')
-        # タスク一覧ページに遷移
         visit tasks_path
-        # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
-        # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
-        expect(page).to have_content 'task'
-        # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
+        expect(page).to have_content 'task1'
+        expect(page).to have_content 'task2'
+        expect(page).to have_content 'task3'
       end
     end
     context '終了期限でソートするというリンクを押すと' do
       it '作成したタスクが表示される' do
-        FactoryBot.create(:task, task_name: 'task1', content: 'content', deadline: '2021-10-27 04:05:00')
-        FactoryBot.create(:task, task_name: 'task2', content: 'content', deadline: '2021-10-28 04:05:00')
         visit tasks_path
         click_on '終了期限でソートする'
         first_table = all('tbody tr')[1]
         second_table = all('tbody tr')[2]
-        expect(first_table).to have_content '2021年10月28日'
-        expect(first_table).to have_content '2021年10月27日'
+        third_table = all('tbody tr')[3]
+        expect(first_table).to have_content '2021年10月29日'
+        expect(second_table).to have_content '2021年10月28日'
+        expect(third_table).to have_content '2021年10月27日'
       end
     end
   end
@@ -138,7 +146,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to_not have_content "task2"
         expect(page).to_not have_content "task3"
       end
-
     end
   end
 end
