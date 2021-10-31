@@ -6,6 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create([{name: 'Admin', email: 'admin@email.com', password: 'password', admin: true},
-              {name: 'Taro', email: 'taro@email.com', password: 'password', admin: false},
-              {name: 'Jiro', email: 'jiro@email.com', password: 'password', admin: false}])
+User.create([{id: 1, name: 'Admin', email: 'admin@email.com', password: 'password', admin: true}])
+
+Task.create([{task_name: 'task', content: 'content', status: '未着手', priority: '低', deadline: '2022-11-01 21:21:21', user_id: 1}])
