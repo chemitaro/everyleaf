@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     # if params[:select].present?
     #   @tasks = @tasks.search(params[:select]) if params[:select][:search].present?
     #   @tasks = @tasks.status(params[:select])
@@ -19,12 +19,14 @@ class TasksController < ApplicationController
     @tasks = @tasks.order(deadline: :desc) if params[:sort_expired]
     @tasks = @tasks.order(priority: :desc) if params[:sort_priority]
     @tasks = @tasks.page(params[:page]).per(5)
+    @user = current_user
   end
   def new
     @task = Task.new
   end
   def create
     @task = Task.new(tasks_params)
+    @task.user_id = current_user.id
     if @task.save
       flash[:notice] = 'タスクを登録しました'
       redirect_to task_path(@task.id)
@@ -34,6 +36,7 @@ class TasksController < ApplicationController
   end
   def show
     @task = Task.find(params[:id])
+    @user = User.find(Task.find(params[:id]).user_id)
   end
   def edit
     @task = Task.find(params[:id])

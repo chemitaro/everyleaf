@@ -1,0 +1,20 @@
+<h1>【管理者メニュー】 ユーザー一覧</h1>
+
+<table>
+  <tr>
+    <th>ユーザー名</th>
+    <th>管理者権限</th>
+    <th>タスク数</th>
+  </tr>
+<% @users.each do |u| %>
+  <tr>
+    <td><%= u.name %></td>
+    <td><%= "＊" if u.admin? %></td>
+    <td><%= @task_count[u.id] %></td>
+    <td><%= link_to("詳細", admin_user_path(u.id)) %></td>
+    <td><%= link_to("編集", edit_admin_user_path(u.id)) %></td>
+    <td><%= link_to("削除", admin_user_path(u.id), method: :delete, data: {confirm: "削除しますか？"})  unless u.id == @current_user.id %> </td>
+  </tr>
+<% end %>
+</table>
+

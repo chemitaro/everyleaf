@@ -15,8 +15,27 @@
     <h1>Everyleaf</h1>
   </header>
   <div id="navbar" >
-    <%= link_to 'タスク一覧', tasks_path %>
-    <%= link_to 'タスク新規登録', new_task_path %>
+    <% if current_user_admin? %>
+      <div id = "nav_admin">
+        <%= link_to('ユーザー 一覧', admin_users_path) %>
+        <%= link_to('ユーザー 作成', new_admin_user_path) %>
+      </div>
+    <% end %>
+    <% if logged_in? %>
+      <div id = "nav_task">
+        <%= link_to('タスク一覧', tasks_path) %>
+        <%= link_to('タスク新規登録', new_task_path) %>
+        <%= link_to('ユーザー情報', user_path(current_user.id)) %>
+      </div>
+      <div id="nav_user">
+          <%= link_to('ログアウト', session_path(current_user.id), method: :delete) %>
+      </div>
+    <% else %>
+      <div id="nav_user">
+          <%= link_to('ログイン', new_session_path ) %>
+          <%= link_to('ユーザー登録', new_user_path ) %>
+      </div>
+    <% end %>
   </div>
   <% if flash %>
     <% flash.each do |key, value| %>
