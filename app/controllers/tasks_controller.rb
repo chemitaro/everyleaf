@@ -19,6 +19,7 @@ class TasksController < ApplicationController
     @tasks = @tasks.order(deadline: :desc) if params[:sort_expired]
     @tasks = @tasks.order(priority: :desc) if params[:sort_priority]
     @tasks = @tasks.page(params[:page]).per(5)
+    @user = current_user
   end
   def new
     @task = Task.new
@@ -35,6 +36,7 @@ class TasksController < ApplicationController
   end
   def show
     @task = Task.find(params[:id])
+    @user = User.find(Task.find(params[:id]).user_id)
   end
   def edit
     @task = Task.find(params[:id])

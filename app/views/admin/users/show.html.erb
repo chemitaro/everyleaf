@@ -3,6 +3,7 @@
   <tr>
     <th>タスク名</th>
     <th>内容</th>
+    <th>ユーザー名</th>
     <th>ステータス</th>
     <th>優先度</th>
     <th>期限</th>
@@ -15,6 +16,7 @@
   <tr>
     <td> <%= task.task_name %> </td>
     <td> <%= task.content %> </td>
+    <td> <%= @user.name %> </td>
     <td> <%= task.status %> </td>
     <td> <%= task.priority %> </td>
     <td> <%= format("%04d年%02d月%02d日 %02d:%02d", task.deadline.year, task.deadline.month, task.deadline.day, task.deadline.hour, task.deadline.min) %> </td>
