@@ -21,6 +21,7 @@
   <%= f.select :priority, ["低", "中", "高"] %> <br>
   <%= f.label :deadline, "期限" %> <br>
   <%= f.datetime_select :deadline %> <br>
+  <%= f.collection_check_boxes :label_ids, Label.all, :id, :label_name %>
   <%= f.submit "編集する" %>
 
 <% end %>
