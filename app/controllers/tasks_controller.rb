@@ -44,7 +44,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.update(tasks_params)
       flash[:notice] = 'タスクを編集しました'
-      redirect_to tasks_path
+      redirect_to task_path(@task.id)
     else
       render :edit
     end
