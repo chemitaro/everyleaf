@@ -19,6 +19,7 @@
       <div id = "nav_admin">
         <%= link_to('ユーザー 一覧', admin_users_path) %>
         <%= link_to('ユーザー 作成', new_admin_user_path) %>
+        <%= link_to('ラベル一覧', admin_labels_path) %>
       </div>
     <% end %>
     <% if logged_in? %>
@@ -26,7 +27,6 @@
         <%= link_to('タスク一覧', tasks_path) %>
         <%= link_to('タスク新規登録', new_task_path) %>
         <%= link_to('ユーザー情報', user_path(current_user.id)) %>
-        <%= link_to('ラベル一覧', admin_labels_path) %>
       </div>
       <div id="nav_user">
           <%= link_to('ログアウト', session_path(current_user.id), method: :delete) %>

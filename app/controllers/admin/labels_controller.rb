@@ -1,4 +1,5 @@
 class Admin::LabelsController < ApplicationController
+  before_action :access_block_non_admin
   def index
     @labels = Label.all
     @label = Label.new
