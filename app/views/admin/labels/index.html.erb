@@ -1,0 +1,18 @@
+<h1>【管理者メニュー】 ラベル一覧</h1>
+　<%= form_with(model: [:admin, @label], local: true) do |label| %>
+  <%= label.label :label_name, "新規ラベルの作成" %>
+  <%= label.text_field :label_name %>
+  <%= label.submit "作成" %>
+<% end %>
+<table>
+  <tr>
+    <th>ラベル名</th>
+    <th></th>
+  </tr>
+  <% @labels.each do |label| %>
+  <tr>
+    <td><%= label.label_name %></td>
+    <td><%= link_to('削除', admin_label_path(label.id), method: :delete, data:{ confirm: '削除しますか？' }) %></td>
+  </tr>
+  <% end %>
+</table>

@@ -43,7 +43,6 @@ class Admin::UsersController < ApplicationController
       flash[:danger] = "ユーザーを削除できませんでした"
       redirect_to(admin_users_path)
     end
-    
   end
   private
   def admin_user_params

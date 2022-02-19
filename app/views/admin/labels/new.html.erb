@@ -1,0 +1,7 @@
+<h1>新規ラベルの作成</h1>
+
+<%= form_with(model: [:admin, @label], local: true) do |label| %>
+  <%= label.label :label_name, "新規ラベル" %>
+  <%= label.text_field :label_name %> <br>
+  <%= label.submit "作成" %>
+<% end %>
